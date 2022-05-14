@@ -1,6 +1,7 @@
 package me.zodd.spleef;
 
 import com.google.inject.Inject;
+import me.zodd.spleef.events.listeners.PlayerDeath;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.LinearComponents;
@@ -9,6 +10,7 @@ import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.api.Server;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.Command;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.parameter.Parameter;
@@ -36,6 +38,7 @@ public class Spleef {
     public void onConstructPlugin(final ConstructPluginEvent event) {
         // Perform any one-time setup
         this.logger.info("Constructing spleef");
+        Sponge.eventManager().registerListeners(getPlugin(), new PlayerDeath());
     }
 
     @Listener
