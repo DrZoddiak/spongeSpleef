@@ -20,20 +20,15 @@ import org.spongepowered.api.event.lifecycle.StoppingEngineEvent;
 import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
 
-/**
- * The main class of your Sponge plugin.
- *
- * <p>All methods are optional -- some common event registrations are included as a jumping-off point.</p>
- */
 @Plugin("spleef")
 public class Spleef {
 
-    private final PluginContainer container;
+    private final PluginContainer plugin;
     private final Logger logger;
 
     @Inject
-    Spleef(final PluginContainer container, final Logger logger) {
-        this.container = container;
+    Spleef(final PluginContainer plugin, final Logger logger) {
+        this.plugin = plugin;
         this.logger = logger;
     }
 
@@ -60,7 +55,7 @@ public class Spleef {
         // Register a simple command
         // When possible, all commands should be registered within a command register event
         final Parameter.Value<String> nameParam = Parameter.string().key("name").build();
-        event.register(this.container, Command.builder()
+        event.register(this.plugin, Command.builder()
                 .addParameter(nameParam)
                 .permission("spleef.command.greet")
                 .executor(ctx -> {
@@ -75,5 +70,13 @@ public class Spleef {
                     return CommandResult.success();
                 })
                 .build(), "greet", "wave");
+    }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
+    public PluginContainer getPlugin() {
+        return plugin;
     }
 }
