@@ -1,23 +1,21 @@
 package me.zodd.spleef.game;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class Game {
-
     private Game instance;
 
-    private List<UUID> alivePlayers;
-    private int matchLength;
+    int gameId;
 
-    Game game(List<UUID> alivePlayers, int matchLength) {
-        this.alivePlayers = alivePlayers;
-        this.matchLength = matchLength;
-        return instance = this;
+    private List<UUID> alivePlayers;
+
+    public Game(int gameId) {
+        this.gameId = gameId;
     }
 
-    void setupGame() {
+    public void setupGame() {
+        GameSettings settings = new GameSettings();
         //Move players if applicable
         //Generate playfield
         //match countdown
@@ -25,7 +23,6 @@ public class Game {
 
     void runGame() {
         //countdown timer
-        //
     }
 
     public void removePlayer(UUID uuid) {
@@ -40,11 +37,4 @@ public class Game {
         return instance;
     }
 
-    public void setMatchLength(int matchLength) {
-        this.matchLength = matchLength;
-    }
-
-    public int getMatchLength() {
-        return matchLength;
-    }
 }

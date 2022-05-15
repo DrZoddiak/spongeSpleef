@@ -1,7 +1,10 @@
 package me.zodd.spleef;
 
 import com.google.inject.Inject;
+import me.zodd.spleef.events.listeners.BreakBuildListener;
 import me.zodd.spleef.events.listeners.PlayerDeath;
+import me.zodd.spleef.game.Game;
+import me.zodd.spleef.game.GameManager;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.LinearComponents;
@@ -38,7 +41,12 @@ public class Spleef {
     public void onConstructPlugin(final ConstructPluginEvent event) {
         // Perform any one-time setup
         this.logger.info("Constructing spleef");
-        Sponge.eventManager().registerListeners(getPlugin(), new PlayerDeath());
+
+
+
+        Sponge.eventManager()
+                .registerListeners(getPlugin(), new PlayerDeath())
+                .registerListeners(getPlugin(), new BreakBuildListener());
     }
 
     @Listener
@@ -62,13 +70,12 @@ public class Spleef {
                 .addParameter(nameParam)
                 .permission("spleef.command.greet")
                 .executor(ctx -> {
-                    final String name = ctx.requireOne(nameParam);
-                    ctx.sendMessage(Identity.nil(), LinearComponents.linear(
-                            NamedTextColor.AQUA,
-                            Component.text("Hello "),
-                            Component.text(name, Style.style(TextDecoration.BOLD)),
-                            Component.text("!")
-                    ));
+                    //temporary
+                    GameManager manager = new GameManager();
+                    Game game = manager.createGame();
+
+                    game.setupGame();
+
 
                     return CommandResult.success();
                 })

@@ -10,7 +10,7 @@ public class PlayerDeath {
     Game runningGame;
 
     PlayerDeath playerDeath(Game game) {
-        runningGame = game;
+        this.runningGame = game;
         return this;
     }
 
