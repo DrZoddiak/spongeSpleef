@@ -19,8 +19,10 @@ public class PlayerDeath {
     }
 
     @Listener
-    void onPlayerDeath(DestructEntityEvent event) {
-        if (!(event.entity() instanceof ServerPlayer)) { return; }
+    public void onPlayerDeath(DestructEntityEvent event) {
+        if (!(event.entity() instanceof ServerPlayer)) {
+            return;
+        }
         ServerPlayer p = (ServerPlayer) event.entity();
 
         runningGame.removePlayer(p.uniqueId());

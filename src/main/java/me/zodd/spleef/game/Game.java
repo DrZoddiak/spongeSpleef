@@ -10,8 +10,15 @@ public class Game {
 
     private List<UUID> alivePlayers;
 
+    GameSettings settings;
+
     public Game(int gameId) {
         this.gameId = gameId;
+    }
+
+    public Game(int gameId, GameSettings settings) {
+        this.gameId = gameId;
+        this.settings = settings;
     }
 
     public void setupGame() {
@@ -19,6 +26,10 @@ public class Game {
         //Move players if applicable
         //Generate playfield
         //match countdown
+    }
+
+    public void setupGame(GameSettings gameSettings) {
+        //TODO setup lobby with settings
     }
 
     void runGame() {

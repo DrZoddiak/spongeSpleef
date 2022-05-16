@@ -1,5 +1,13 @@
 package me.zodd.spleef.game;
 
+import me.zodd.spleef.Spleef;
+import me.zodd.spleef.events.senders.CreateGameEvent;
+import org.jetbrains.annotations.Nullable;
+import org.spongepowered.api.Sponge;
+import org.spongepowered.api.event.Cause;
+import org.spongepowered.api.event.Event;
+import org.spongepowered.api.event.Listener;
+
 import java.util.Map;
 
 public class GameManager {
@@ -8,20 +16,52 @@ public class GameManager {
 
     static int runningGames = 0;
 
-    public GameManager() {
+    Spleef instance;
 
+    public GameManager(Spleef instance) {
+        this.instance = instance;
     }
 
-    public Game createGame() {
+    @Listener
+    public void onGameCreate(CreateGameEvent event) {
+        if (event.isCancelled()) return;
+
+        Game game = event.getGame();
+    }
+
+    private Game createGame() {
         Game game = new Game(runningGames);
-        activeGames.put(runningGames,game);
-        runningGames++;
+        activeGames.put(runningGames++, game);
+        return game;
+    }
+
+    private Game createGame(GameSettings settings) {
+
+        Game game = new Game(runningGames, settings);
+
+        CreateGameEvent gameEvent = new CreateGameEvent(
+                game,
+                Cause.of(instance.getEventContext(), instance.getPlugin())
+        );
+
+        sendEvent(gameEvent);
+
+        activeGames.put(runningGames++, game);
         return game;
     }
 
     public void destroyGame(int gameId) {
         activeGames.remove(gameId);
         //todo Breakdown process for the game
+    }
+
+    private <T extends Event> void sendEvent(T event) {
+        Sponge.eventManager().post(event);
+    }
+
+    @Nullable
+    public Game getActiveGame(int gameId) {
+        return activeGames.get(gameId);
     }
 
 }
