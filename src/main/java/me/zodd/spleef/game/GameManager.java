@@ -4,7 +4,6 @@ import me.zodd.spleef.Spleef;
 import me.zodd.spleef.events.senders.CreateGameEvent;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.api.Sponge;
-import org.spongepowered.api.event.Cause;
 import org.spongepowered.api.event.Event;
 import org.spongepowered.api.event.Listener;
 
@@ -39,10 +38,7 @@ public class GameManager {
 
         Game game = new Game(runningGames, settings);
 
-        CreateGameEvent gameEvent = new CreateGameEvent(
-                game,
-                Cause.of(instance.getEventContext(), instance.getPlugin())
-        );
+        CreateGameEvent gameEvent = new CreateGameEvent(game, instance);
 
         sendEvent(gameEvent);
 
@@ -55,7 +51,7 @@ public class GameManager {
         //todo Breakdown process for the game
     }
 
-    private <T extends Event> void sendEvent(T event) {
+    private void sendEvent(Event event) {
         Sponge.eventManager().post(event);
     }
 
