@@ -2,14 +2,13 @@ package me.zodd.spleef.game;
 
 import me.zodd.spleef.Spleef;
 import me.zodd.spleef.events.senders.CreateGameEvent;
+import me.zodd.spleef.interfaces.ManagerInterface;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.api.Sponge;
-import org.spongepowered.api.event.Event;
 import org.spongepowered.api.event.Listener;
 
 import java.util.Map;
 
-public class GameManager {
+public class GameManager implements ManagerInterface<Game> {
 
     static Map<Integer, Game> activeGames;
 
@@ -40,7 +39,7 @@ public class GameManager {
 
         CreateGameEvent gameEvent = new CreateGameEvent(game, instance);
 
-        sendEvent(gameEvent);
+        postEvent(gameEvent);
 
         activeGames.put(runningGames++, game);
         return game;
@@ -51,13 +50,18 @@ public class GameManager {
         //todo Breakdown process for the game
     }
 
-    private void sendEvent(Event event) {
-        Sponge.eventManager().post(event);
-    }
-
     @Nullable
     public Game getActiveGame(int gameId) {
         return activeGames.get(gameId);
     }
 
+    @Override
+    public Game create() {
+        return null;
+    }
+
+    @Override
+    public boolean destroy() {
+        return ManagerInterface.super.destroy();
+    }
 }
