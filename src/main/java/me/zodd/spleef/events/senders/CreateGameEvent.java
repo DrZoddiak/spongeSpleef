@@ -3,7 +3,6 @@ package me.zodd.spleef.events.senders;
 import me.zodd.spleef.game.Game;
 import org.spongepowered.api.event.Cancellable;
 import org.spongepowered.api.event.Cause;
-import org.spongepowered.api.event.EventContext;
 import org.spongepowered.api.event.impl.AbstractEvent;
 
 public class CreateGameEvent extends AbstractEvent implements Cancellable {
@@ -21,10 +20,9 @@ public class CreateGameEvent extends AbstractEvent implements Cancellable {
         return game;
     }
 
-
     @Override
     public boolean isCancelled() {
-        return false;
+        return cancellable;
     }
 
     @Override
@@ -35,15 +33,5 @@ public class CreateGameEvent extends AbstractEvent implements Cancellable {
     @Override
     public Cause cause() {
         return this.cause;
-    }
-
-    @Override
-    public Object source() {
-        return super.source();
-    }
-
-    @Override
-    public EventContext context() {
-        return super.context();
     }
 }

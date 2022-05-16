@@ -2,7 +2,6 @@ package me.zodd.spleef;
 
 import com.google.inject.Inject;
 import me.zodd.spleef.events.listeners.BreakBuildListener;
-import me.zodd.spleef.events.listeners.PlayerDeath;
 import me.zodd.spleef.game.GameManager;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.api.Server;
@@ -49,7 +48,6 @@ public class Spleef {
         manager = new GameManager(instance);
 
         Sponge.eventManager()
-                .registerListeners(getPlugin(), new PlayerDeath())
                 .registerListeners(getPlugin(), new BreakBuildListener());
     }
 
