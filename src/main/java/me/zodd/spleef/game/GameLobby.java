@@ -6,7 +6,7 @@ import java.util.UUID;
 public class GameLobby {
     protected List<UUID> lobbyPlayers;
 
-    private int requiredPlayersToStart;
+    private List<UUID> requiredPlayersToStart;
 
 
     public void beginGame() {
