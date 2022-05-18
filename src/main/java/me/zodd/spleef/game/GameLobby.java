@@ -12,7 +12,7 @@ public class GameLobby {
     public void beginGame() {
     if (lobbyPlayers.equals(requiredPlayersToStart)){
         Game game = new Game();
-        game.time(10);
+        game.runGame();
     }
     }
 
